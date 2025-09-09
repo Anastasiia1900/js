@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>Бібліотека</title>
+</head>
+<body>
+  <h1>Моя бібліотека</h1>
+  <script>
+    class Library {
+  constructor() {
+    this.books = [];
+  }
+  addBook(title, author) {
+    this.books.push({ title, author });
+  }
+  findBook(title) {
+    for (let book of this.books) {
+      if (book.title === title) {
+        return book;
+      }
+    }
+    return "Книгу не знайдено";
+  }
+  listBooks() {
+    if (this.books.length === 0) {
+      console.log("Бібліотека порожня");
+      return;
+    }
+    for (let book of this.books) {
+      console.log(`Назва: ${book.title}, Автор: ${book.author}`);
+    }
+  }
+  removeBook(title) {
+    this.books = this.books.filter(book => book.title !== title);
+  }
+}
+let myLibrary = new Library();
+myLibrary.addBook("Мистецтво війни", "Сунь-Цзи");
+myLibrary.addBook("Кобзар", "Тарас Шевченко");
+  </script>
+</body>
+</html>
