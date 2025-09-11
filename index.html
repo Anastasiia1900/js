@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uk">
+    <head>
+        <meta charset="utf-8">
+        <title>ex5</title>
+    </head>
+    <body>
+        <script>
+            class Shop {
+                constructor() {
+                    this.products = [];
+                }
+            addProduct(name, price, quantity) {
+                const existingProduct = this.products.find(product => product.name === name);
+                if (existingProduct) {
+                    existingProduct.quantity += quantity;
+                }
+                else {
+                    this.products.push({
+                        name: name,
+                        price: price,
+                        quantity: quantity
+                    });
+                }
+            }
+            byProduct(name, count) {
+                const product = this.product.find(product => product.name === name);
+                if (!product) {
+                    console.log("товар не знайдено");
+                    return;
+                }
+                if (product.quantity < count) {
+                    console.log("недостатньо товару");
+                    return;
+                }
+                product.quantity -= count;
+            }
+            listProducts() {
+                console.log("список товарів");
+                this.product.forEach(product => {
+                    console.log(`назва: 
+                    ${product.name}, ціна: 
+                    ${product.price}, кількість: 
+                    ${product.quantity}`);
+                });
+            }
+            totalValue() {
+                let total = 0;
+                this.products.forEach(product => {
+                    total += product.price * product.quantity;
+                });
+                return total;
+                }
+            }
+            let myShop = new Shop();
+            myShop.addProduct("Яблуко", 10, 50);
+            myShop.addProduct("Банан", 20, 30);
+            myShop.addProduct("Яблуко", 10, 20);
+            myShop.listProducts();
+            myShop.buyProduct("Яблуко", 15);
+            myShop.buyProduct("Банан", 50);
+            myShop.listProducts();
+            console.log("Загальна вартість:", myShop.totalValue());
+        </script>
+    </body>
+</html>
