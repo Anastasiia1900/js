@@ -2,65 +2,55 @@
 <html lang="uk">
     <head>
         <meta charset="utf-8">
-        <title>ex5</title>
+        <title>ex6</title>
     </head>
     <body>
         <script>
-            class Shop {
-                constructor() {
-                    this.products = [];
-                }
-            addProduct(name, price, quantity) {
-                const existingProduct = this.products.find(product => product.name === name);
-                if (existingProduct) {
-                    existingProduct.quantity += quantity;
-                }
-                else {
-                    this.products.push({
-                        name: name,
-                        price: price,
-                        quantity: quantity
-                    });
+            function BankAccount(owner, balance) {
+                //зберігає отримані значення 
+                this.owner = owner;
+                this.balance = balance;
+            }
+
+            //додає гроші на рахунок
+            BankAccount.prototype.deposit = function(amount) {
+                //збільшить баланс на вказану суму
+                this.balance += amount
+            }
+
+            //знімає гроші з рахунку
+            BankAccount.prototype.withdraw = function(amount) { 
+                //перевіряє чи достатньо коштів
+                if (this.balance >= amount) {
+                    this.balance -= amount;
+                    return true; //операція успішна, зменшується баланс
+                } 
+                else { 
+                    console.log('недостатньо коштів');
+                    return false;//недостатньо коштів
                 }
             }
-            byProduct(name, count) {
-                const product = this.product.find(product => product.name === name);
-                if (!product) {
-                    console.log("товар не знайдено");
-                    return;
-                }
-                if (product.quantity < count) {
-                    console.log("недостатньо товару");
-                    return;
-                }
-                product.quantity -= count;
+
+            //поточний баласнс 
+            BankAccount.prototype.getBalance = function() {
+                return this.balance; //повертає поточне значення балансу рахунку
             }
-            listProducts() {
-                console.log("список товарів");
-                this.product.forEach(product => {
-                    console.log(`назва: 
-                    ${product.name}, ціна: 
-                    ${product.price}, кількість: 
-                    ${product.quantity}`);
-                });
-            }
-            totalValue() {
-                let total = 0;
-                this.products.forEach(product => {
-                    total += product.price * product.quantity;
-                });
-                return total;
+
+            //покласти гроші на інший рахунок
+            BankAccount.prototype.transferTo = function(anotherAccount, amount) { //пробує знати гроші
+                if (this.withdraw(amount)) { //якщо вдале, додає до іншого разунку
+                    anotherAccount.deposit(amount); //якщо ні, то нічого 
                 }
             }
-            let myShop = new Shop();
-            myShop.addProduct("Яблуко", 10, 50);
-            myShop.addProduct("Банан", 20, 30);
-            myShop.addProduct("Яблуко", 10, 20);
-            myShop.listProducts();
-            myShop.buyProduct("Яблуко", 15);
-            myShop.buyProduct("Банан", 50);
-            myShop.listProducts();
-            console.log("Загальна вартість:", myShop.totalValue());
+
+            let acc1 = new BankAccount("Олена", 1000);
+            let acc2 = new BankAccount("Іван", 500);
+            acc1.deposit(200);
+            acc1.withdraw(150);
+            console.log(acc1.getBalance());
+            acc1.transferTo(acc2, 300);
+            console.log(acc1.getBalance());
+            console.log(acc2.getBalance());
         </script>
     </body>
 </html>
