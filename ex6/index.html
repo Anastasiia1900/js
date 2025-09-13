@@ -6,40 +6,42 @@
     </head>
     <body>
         <script>
-            function BankAccount(owner, balance) {
-                //зберігає отримані значення 
-                this.owner = owner;
-                this.balance = balance;
-            }
-
-            //додає гроші на рахунок
-            BankAccount.prototype.deposit = function(amount) {
-                //збільшить баланс на вказану суму
-                this.balance += amount
-            }
-
-            //знімає гроші з рахунку
-            BankAccount.prototype.withdraw = function(amount) { 
-                //перевіряє чи достатньо коштів
-                if (this.balance >= amount) {
-                    this.balance -= amount;
-                    return true; //операція успішна, зменшується баланс
-                } 
-                else { 
-                    console.log('недостатньо коштів');
-                    return false;//недостатньо коштів
+            class BankAccount {
+                constructor(owner, balance) {
+                    //зберігає отримані значення 
+                    this.owner = owner;
+                    this.balance = balance;
                 }
-            }
 
-            //поточний баласнс 
-            BankAccount.prototype.getBalance = function() {
-                return this.balance; //повертає поточне значення балансу рахунку
-            }
+                //додає гроші на рахунок
+                deposit(amount) {
+                    //збільшить баланс на вказану суму
+                    this.balance += amount
+                }
 
-            //покласти гроші на інший рахунок
-            BankAccount.prototype.transferTo = function(anotherAccount, amount) { //пробує знати гроші
-                if (this.withdraw(amount)) { //якщо вдале, додає до іншого разунку
-                    anotherAccount.deposit(amount); //якщо ні, то нічого 
+                //знімає гроші з рахунку
+                withdraw(amount) { 
+                    //перевіряє чи достатньо коштів
+                    if (this.balance >= amount) {
+                        this.balance -= amount;
+                        return true; //операція успішна, зменшується баланс
+                    } 
+                    else { 
+                        console.log('недостатньо коштів');
+                        return false;//недостатньо коштів
+                    }
+                }
+
+                //поточний баласнс 
+                getBalance() {
+                    return this.balance; //повертає поточне значення балансу рахунку
+                }
+
+                //покласти гроші на інший рахунок
+                transferTo(anotherAccount, amount) { //пробує знати гроші
+                    if (this.withdraw(amount)) { //якщо вдале, додає до іншого разунку
+                        anotherAccount.deposit(amount); //якщо ні, то нічого 
+                    }
                 }
             }
 
