@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="uk">
+    <head>
+        <meta charset="utf-8">
+        <title>ex7</title>
+    </head>
+    <body>
+        <script>
+            class User {
+                constructor(name, age, favNumbers) {
+                    this.name = name.trim(); // прибирає пробіли з початку і кінця
+                    this.name = this.name.charAt(0).toUpperCase() + this.name.slice(1); // перша літера велика
+                    this.age = Number(age); // зберігає вік
+                    if (isNaN(this.age)) { //якщо вік не число
+                        alert("вік має бути числом");
+                    }
+                    this.numbers = favNumbers
+                    .split(",") // розділяє рядок за комою
+                    .map(num => Number(num.trim())); // прибирає пробіли і перетворює на число
+                }
+
+                sortNumbers() {
+                    this.numbers.sort((a, b) => a - b); // сортує від меншого до більшого
+                }
+
+                getMin() {
+                    return Math.min(...this.numbers); // повертає найменше число
+                }
+
+                getMax() {
+                    return Math.max(...this.numbers); // повертає найбільше число
+                }
+
+                getAverage() {
+                    let sum = 0; // змінна для суми
+                    for (let num of this.numbers) { sum += num; } // перебирає всі числа і додає кожне число
+                    return sum / this.numbers.length;
+                }
+
+                showInfo() {
+                    this.sortNumbers(); //сортує числа
+                    //виводить у консоль
+                    console.log("Привіт, " + this.name + "!");
+                    console.log("Ваш вік: " + this.age);
+                    console.log("Ваші улюблені числа (відсортовані): " + this.numbers.join(", "));
+                    console.log(
+                        "Мінімальне: " + this.getMin() +
+                        ", Максимальне: " + this.getMax() +
+                        ", Середнє: " + this.getAverage().toFixed(2));
+                        //виводить кожне число окремо
+                    for (let num of this.numbers) {
+                        console.log("Ваше улюблене число: " + num);
+                    }
+                }
+            }
+
+            let name = prompt("Введіть своє ім'я:");
+            let age = prompt("Введіть свій вік:");
+            let favNumbers = prompt("Введіть улюблені числа через кому:");
+            let user = new User(name, age, favNumbers);
+            user.showInfo();
+        </script>
+    </body>
+</html>
